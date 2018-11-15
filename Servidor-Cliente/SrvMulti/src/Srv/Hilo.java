@@ -12,6 +12,7 @@ class Hilo implements Runnable{
     private final Socket socket;
     private ObjectOutputStream oos;
     private double ownTime;
+    private Paquete p;
     
     public Hilo(Socket socket) {
         this.socket = socket;
@@ -23,6 +24,8 @@ class Hilo implements Runnable{
 	    System.err.println(ex);
         }
     }
+    
+    
     
     public void envPaq(Paquete p){ //reenvia el paquete que recibe
        
@@ -72,7 +75,6 @@ class Hilo implements Runnable{
     @Override
     public void run() {
         ObjectInputStream ois = null;
-        Paquete p;
 
         try {
             ois = new ObjectInputStream(this.socket.getInputStream());
@@ -83,6 +85,7 @@ class Hilo implements Runnable{
             try {
                 // aqui lee el paquete que le envia el cliente
                 p = (Paquete)ois.readObject();
+                
                 ownTime = p.getTimestamp();
                 /*if(p != null)
                     ownTime = p.getTimestamp();*/

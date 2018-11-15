@@ -11,8 +11,8 @@ package Clt;
 public class CltMulti {
 
     public static void main(String[] args) {
-	int nClientes = 3;
-        int nGrupos = 2;
+	int nClientes = 10;
+        int nGrupos = 10;
 	int pausa = 10000;
 	String ip = "localhost";
 	int port = 10000;

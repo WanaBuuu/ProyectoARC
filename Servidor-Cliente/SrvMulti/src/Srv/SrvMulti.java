@@ -13,23 +13,21 @@ import java.util.Vector;
 public class SrvMulti {
     
     private static final int port = 10000;
-    private static final int numClientes = 2;
+    private static final int numClientes = 100;
       
     /**
      * @param args the command line arguments
      * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-	int numConexiones = 0;
         Vector<Hilo> hilos = new Vector<>();
         
         try {
-            ServerSocket ss = new ServerSocket(port);
+            ServerSocket ss = new ServerSocket(port, numClientes);
             
-            while (true && numConexiones < numClientes){
+            while (true){
                 try {
                     Socket s = ss.accept(); // aceptas conexion
-                    numConexiones++;
                     System.out.println("Aceptada la conexión " + ss);
 		    Hilo sh = new Hilo(s); // crea el hilo del servidor
                     hilos.add(sh);
