@@ -25,6 +25,7 @@ class Hilo implements Runnable{
         }
     }
     
+	
     public void envPaq(Paquete p){ //reenvia el paquete que recibe
        try {
             for(int j = 0; j < p.getnGrupos(); j++){
