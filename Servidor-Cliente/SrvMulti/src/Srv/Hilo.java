@@ -25,7 +25,13 @@ class Hilo implements Runnable{
         }
     }
     
-	
+    public Paquete getPaquete() {
+        return this.p;
+    }
+    public void setPaquete(Paquete p) {
+        this.p = p;
+    }
+    
     public void envPaq(Paquete p){ //reenvia el paquete que recibe
        try {
             for(int j = 0; j < p.getnGrupos(); j++){

@@ -130,7 +130,7 @@ public class Cliente  implements Runnable { // extedns mihilo
            
             contadorACK ++;
             double d = (p.getTimestamp() - t1)/2;
-            System.out.println("Tengo " + contadorACK + " ACK recibidos ");
+            System.out.println("Tengo todos los ACK recibidos ");
             System.out.println("Timestamp (d):\n");
 
             if (contadorACK < (this.nClientes)){ // (p.getnClientes() - 1)
