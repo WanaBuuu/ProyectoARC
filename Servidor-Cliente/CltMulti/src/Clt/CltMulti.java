@@ -14,7 +14,7 @@ public class CltMulti {
     
     public static void main(String[] args) {
 	nClientes = 10;
-        int nGrupos = 10;
+        int nGrupos = 50;
 	int pausa = 10000;
 	String ip = "localhost";
 	int port = 10000;

@@ -13,7 +13,7 @@ import paquete.Paquete;
 
 public class SrvMulti {
     private static final int port = 10000;
-    private static final int numClientes = 100;
+    private static final int numClientes = 500;
       
     public static void main(String[] args) throws InterruptedException {
         Vector<Hilo> hilos = new Vector<>();
