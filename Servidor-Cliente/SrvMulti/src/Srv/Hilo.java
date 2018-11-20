@@ -25,11 +25,7 @@ class Hilo implements Runnable{
         }
     }
     
-    
-    
     public void envPaq(Paquete p){ //reenvia el paquete que recibe
-       
-        
        try {
             for(int j = 0; j < p.getnGrupos(); j++){
                for(int i = 0; i < p.getnClientes(); i++){ //creo que este bucle va fuera.. quitar de clase Cliente el numeroDeClientes. ********
@@ -75,7 +71,8 @@ class Hilo implements Runnable{
     @Override
     public void run() {
         ObjectInputStream ois = null;
-
+        Paquete ack = new Paquete();
+        
         try {
             ois = new ObjectInputStream(this.socket.getInputStream());
         } catch (IOException e) {
@@ -94,9 +91,18 @@ class Hilo implements Runnable{
                     System.out.println("SERVIDOR intercepta coordenadas "+ p.getCoordenadas() + " del CLIENTE " + p.getNumCliente() + " del grupo " + p.getNumGrupo());   
                     // Enviar el paquete al resto del grupo menos al que se lo ha enviado si no es 
                     this.envPaq(p);
+                    System.out.println("Paquete normal");
                 }
                 else{
-                    this.envConfirmacion(p);
+                    /* Crea el paquete ack*/
+                    ack.setAck(true);
+                    ack.setNumCliente(p.getNumCliente());
+                    ack.setNumGrupo(p.getNumGrupo());
+                    ack.setnClientes(p.getnClientes());
+                    ack.setnGrupos(p.getnGrupos());
+                    
+                    this.envConfirmacion(ack);
+                    System.out.println("paquete ack");
                 }
                    
             } catch (ClassNotFoundException | IOException e) {

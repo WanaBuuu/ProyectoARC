@@ -51,7 +51,7 @@ public class Cliente  implements Runnable { // extedns mihilo
 	try {
 	    oos.writeObject(p);
             System.out.println("CLIENTE " + String.valueOf(id) + " del grupo " + String.valueOf(grupo) + " ha enviado coordenadas " + p.getCoordenadas() + " al SERVIDOR" );
-	    Thread.sleep(pausa); // PROBLEMA aqi deberia ponerse a dormir hasta que reciba la confirmacion de todos los clientes
+	    Thread.sleep(pausa); 
 	} catch (IOException | InterruptedException ex) {
 	    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
 	}
@@ -61,7 +61,7 @@ public class Cliente  implements Runnable { // extedns mihilo
         try {
 	    oos.writeObject(ack);
             System.out.println("CLIENTE envia confirmación de recepción de el paquete reenviado por el SERVIDOR");
-	    Thread.sleep(pausa); // PROBLEMA aqi deberia ponerse a dormir hasta que reciba la confirmacion de todos los clientes
+	    Thread.sleep(pausa); 
 	} catch (IOException | InterruptedException ex) {
 	    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
 	}
@@ -73,6 +73,7 @@ public class Cliente  implements Runnable { // extedns mihilo
         Paquete ack = new Paquete();
         int x,y,z, contadorACK = 0;
         ObjectInputStream ois = null;
+        boolean PInicion = false;
 
         // Rellenamos el paquete que contendra las coordenadas
         // crea coordenas aleatorias
@@ -96,10 +97,15 @@ public class Cliente  implements Runnable { // extedns mihilo
         ack.setAck(true);
         
 	while (true){
-	    this.envPaq(p); // envia el paquete creado
+            
+            if (!PInicion){
+                this.envPaq(p); // envia el paquete creado
+                PInicion = true;
+            }
             
             try {
                 ois = new ObjectInputStream(this.cliente.getInputStream());
+                
             } catch (IOException e) {
                 System.out.println(e);
             }
@@ -107,30 +113,30 @@ public class Cliente  implements Runnable { // extedns mihilo
                 // aqui lee el paquete que le envia el servidor
                 p = (Paquete)ois.readObject();
                 
-                
                 if (!p.isAck()){
                     t1 = p.getTimestamp() - System.currentTimeMillis();
                     System.out.println("T1:" + t1);
                     System.out.println("CLIENTE intercepta coordenadas "+ p.getCoordenadas() + " del cliente " + p.getNumCliente() + " del grupo " + p.getNumGrupo() + " que le reenvia el servidor");
+                    
+                    // Eviar confirmacion de receptor del servidor
+                    this.envConfirmacion(ack);
                 }
-                else{
-                    contadorACK ++;
-                    double d = (p.getTimestamp() - t1)/2;
-                    System.out.println("Tengo " + contadorACK + " ACK recibidos");
-                    System.out.println("Timestamp (d):" + d + "\n");
-                    if (contadorACK < 2){ // (p.getnClientes() - 1)
-                        System.out.println("Recibido todos los ACK, me desconecto");
-                        cliente.close();
-                    }
-                        
+                else{   
                 }
             } catch (ClassNotFoundException | IOException e) {
                 System.out.println("falla run hilo");
-                //Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, e);
             }
-            
-            // Eviar confirmacion de receptor del servidor
-            this.envConfirmacion(ack);
+           
+            contadorACK ++;
+            double d = (p.getTimestamp() - t1)/2;
+            System.out.println("Tengo " + contadorACK + " ACK recibidos ");
+            System.out.println("Timestamp (d):\n");
+
+            if (contadorACK < (this.nClientes)){ // (p.getnClientes() - 1)
+                System.out.println("Recibido todos los ACK, me desconecto");
+                //System.exit(0);
+            }
 	}
     } 
 }
