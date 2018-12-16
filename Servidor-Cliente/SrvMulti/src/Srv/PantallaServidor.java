@@ -101,7 +101,10 @@ public class PantallaServidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartServerActionPerformed
-        // TODO add your handling code here:
+        
+        
+        
+        
     }//GEN-LAST:event_StartServerActionPerformed
 
     /**
