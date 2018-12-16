@@ -50,7 +50,7 @@
                   <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel2" max="32767" attributes="0"/>
-                      <Component id="NConexionesServer" max="32767" attributes="0"/>
+                      <Component id="nConexionesTotales" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="100" max="32767" attributes="0"/>
               </Group>
@@ -77,7 +77,7 @@
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="NConexionesServer" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="nConexionesTotales" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="StartServer" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="38" max="32767" attributes="0"/>
@@ -113,7 +113,7 @@
             <Property name="text" type="java.lang.String" value="N&#xba; Total de conexiones"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="NConexionesServer">
+        <Component class="javax.swing.JTextField" name="nConexionesTotales">
         </Component>
       </SubComponents>
     </Container>

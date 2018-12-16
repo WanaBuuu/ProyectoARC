@@ -5,6 +5,9 @@
  */
 package Srv;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author nere1
@@ -31,7 +34,7 @@ public class PantallaServidor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         StartServer = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        NConexionesServer = new javax.swing.JTextField();
+        nConexionesTotales = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,7 +63,7 @@ public class PantallaServidor extends javax.swing.JFrame {
                 .addGap(124, 124, 124)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NConexionesServer))
+                    .addComponent(nConexionesTotales))
                 .addContainerGap(100, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -80,7 +83,7 @@ public class PantallaServidor extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NConexionesServer, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nConexionesTotales, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(StartServer)
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -102,9 +105,18 @@ public class PantallaServidor extends javax.swing.JFrame {
 
     private void StartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartServerActionPerformed
         
+        SrvMulti srv = new SrvMulti();
+        int nConexiones;
         
+        nConexiones = Integer.valueOf(nConexionesTotales.getText());
         
+        try {
+            srv.StrartServidor(nConexiones);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        this.setVisible(false);
     }//GEN-LAST:event_StartServerActionPerformed
 
     /**
@@ -143,10 +155,10 @@ public class PantallaServidor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField NConexionesServer;
     private javax.swing.JButton StartServer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField nConexionesTotales;
     // End of variables declaration//GEN-END:variables
 }
