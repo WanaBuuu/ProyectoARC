@@ -29,7 +29,7 @@ public class SrvMulti {
         try {
             ServerSocket ss = new ServerSocket(port, numClientes);
             
-            while (true && numConexiones < numClientes){
+            while (numConexiones < numClientes){
                 try {
                     Socket s = ss.accept(); // aceptas conexion
                     System.out.println("Aceptada la conexión " + ss);
@@ -71,15 +71,15 @@ public class SrvMulti {
     }
     
     
-    public void StrartServidor(int nConexiones) throws InterruptedException{
+    public void StartServidor(int nConexiones) throws InterruptedException{
         Vector<Hilo> hilos = new Vector<>();
         int port = 10000;
         
 	int numConexiones = 0;
-		
+     
         try {
             ServerSocket ss = new ServerSocket(port, numClientes);
-            
+
             while (true && numConexiones < numClientes){
                 try {
                     Socket s = ss.accept(); // aceptas conexion
@@ -88,18 +88,19 @@ public class SrvMulti {
                     Hilo sh = new Hilo(s); // crea el hilo del servidor
                     hilos.add(sh);
                    // new Thread(sh).start(); // empieza el hilo
-		} catch (IOException e) {
+                } catch (IOException e) {
                     System.out.println("No se puede conectar con el puerto " + port +": " + e.getMessage());
-		}
+                }
             }
-            
+
             for(int i = 0; i< hilos.size(); i++){
                 new Thread(hilos.get(i)).start();
             }
         } catch (IOException ex) {
             System.out.println("catch del server multi " + ex);
             //Logger.getLogger(Jawa3.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }	
+        
 		
         //añadido mipumu
         System.out.println("*** Se han establecido todas las conexiones ***\n*** Empieza la simulación ***");

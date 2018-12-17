@@ -111,7 +111,7 @@ public class PantallaServidor extends javax.swing.JFrame {
         nConexiones = Integer.valueOf(nConexionesTotales.getText());
         
         try {
-            srv.StrartServidor(nConexiones);
+            srv.StartServidor(nConexiones);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
