@@ -26,7 +26,7 @@ public class CltMulti {
      */
     public void StartCliente(int nVecinos, int nClientesTotales, int ciclos, String ip, int port){
         int nClientes = (nVecinos + 1);
-        int nGrupos = ((nVecinos +1) / nClientesTotales);
+        int nGrupos = (nClientesTotales / (nVecinos +1));
 	int pausa = 10000;
 	int it = 0;
         String s;
