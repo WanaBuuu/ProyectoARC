@@ -82,11 +82,8 @@ class Hilo implements Runnable{
                for(int i = 0; i < p.getnClientes(); i++){
                     if(p.getNumCliente() == i && p.getNumGrupo() == j){ 
                         //System.out.println(String.valueOf(p.getNumCliente()) + i + " " + String.valueOf(p.getNumGrupo())  + j);
-                        //Envio T2
-                        p.setTimestamp((System.currentTimeMillis()) - ownTime);
                         p.setNumCliente(i);
                         oos.writeObject(p);
-                        System.out.println("T2: " + ((System.currentTimeMillis()) - ownTime));
                         System.out.println("SERVIDOR envia ACK al CLIENTE " + p.getNumCliente());
                     }
                 }
