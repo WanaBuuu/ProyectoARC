@@ -183,9 +183,6 @@
         <Component class="javax.swing.JTextField" name="nVecinos">
         </Component>
         <Component class="javax.swing.JTextField" name="nClientesTotales">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nClientesTotalesActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="nCiclos">
         </Component>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Clt;
 
 import paquete.Paquete;
@@ -14,8 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * @brief Clase cliente principal
  * 
+ * @author G 1.1
  */
 public class Cliente  implements Runnable { // extedns mihilo 
     
@@ -27,7 +23,16 @@ public class Cliente  implements Runnable { // extedns mihilo
     private Socket cliente;
     private double t1;
 
-
+    /**
+     *
+     * @param ip
+     * @param port
+     * @param pausa
+     * @param grupo
+     * @param id
+     * @param nGrupos
+     * @param nClientes
+     */
     public Cliente(String ip, int port, int pausa,int grupo,int id, int nGrupos, int nClientes) {
 	this.ip = ip;
 	this.port = port;
@@ -47,6 +52,10 @@ public class Cliente  implements Runnable { // extedns mihilo
         
     }
   
+    /**
+     *
+     * @param p
+     */
     public void envPaq(Paquete p){
 	try {
 	    oos.writeObject(p);
@@ -57,6 +66,10 @@ public class Cliente  implements Runnable { // extedns mihilo
 	}
     }
     
+    /**
+     *
+     * @param ack
+     */
     public void envConfirmacion(Paquete ack){
         try {
 	    oos.writeObject(ack);
