@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,14 +24,14 @@ public class Cliente  implements Runnable { // extedns mihilo
     private double t1;
 
     /**
-     *
-     * @param ip
-     * @param port
-     * @param pausa
-     * @param grupo
-     * @param id
-     * @param nGrupos
-     * @param nClientes
+     * @brief Constructor de la clase
+     * @param ip IP del servidor al que se tiene que se conectar
+     * @param port Puerto por el que se tiene que conectar al servidor
+     * @param pausa Tiempo de espera
+     * @param grupo Grupo del cliente
+     * @param id Identificador del cliente 
+     * @param nGrupos Numero de grupos
+     * @param nClientes Numero de clientes
      */
     public Cliente(String ip, int port, int pausa,int grupo,int id, int nGrupos, int nClientes) {
 	this.ip = ip;
@@ -54,13 +53,12 @@ public class Cliente  implements Runnable { // extedns mihilo
     }
   
     /**
-     *
-     * @param p
+     * @brief Metodo para enviar un paquete
+     * @param p Paquete 
      */
     public void envPaq(Paquete p){
 	try {
-            //Guarda la hora en que se envía el paquete
-            p.setTimestamp(System.currentTimeMillis());
+            p.setTimestamp(System.currentTimeMillis()); // Almacena la hora de envío del paquete
 	    oos.writeObject(p);
             System.out.println("CLIENTE " + String.valueOf(id) + " del grupo " + String.valueOf(grupo) + " ha enviado coordenadas " + p.getCoordenadas() + " al SERVIDOR" );
 	    Thread.sleep(pausa); 
@@ -70,8 +68,8 @@ public class Cliente  implements Runnable { // extedns mihilo
     }
     
     /**
-     *
-     * @param ack
+     * @brief Envía una confirmación ACK 
+     * @param ack Paquete ACK
      */
     public void envConfirmacion(Paquete ack){
         try {
@@ -107,7 +105,7 @@ public class Cliente  implements Runnable { // extedns mihilo
         p.setnGrupos(nGrupos);
         
         
-        // Rellenamos el paquete para responder al servidor que nos ha llegado su reenvio
+        // Rellenamos el paquete para responder al servidor de que nos ha llegado su reenvio
         ack.setNumCliente(id);
         ack.setNumGrupo(grupo);
         ack.setnClientes(nClientes);
@@ -115,20 +113,19 @@ public class Cliente  implements Runnable { // extedns mihilo
         ack.setAck(true);
         
 	while (true){
-            
             if (!PInicion){
                 this.envPaq(p); // envia el paquete creado
                 PInicion = true;
             }
             
             try {
-                ois = new ObjectInputStream(this.cliente.getInputStream());
-                
+                ois = new ObjectInputStream(this.cliente.getInputStream());    
             } catch (IOException e) {
                 System.out.println(e);
             }
+            
             try {
-                // aqui lee el paquete que le envia el servidor
+                // aqui se lee el paquete que le envia el servidor
                 p = (Paquete)ois.readObject();
                 
                 if (!p.isAck()){
@@ -148,7 +145,7 @@ public class Cliente  implements Runnable { // extedns mihilo
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, e);
             }
            
-            contadorACK ++;
+            contadorACK++;
             d = (System.currentTimeMillis() - p.getTimestamp());
             System.out.println("Tiempo por cliente (d): "+ d + "\n");
 
@@ -158,7 +155,6 @@ public class Cliente  implements Runnable { // extedns mihilo
                 //tiempo total que tarda el grupo en contestar al cliente -> suma de todos los d recibidos
                 System.out.println("Tiempo total del grupo: " + prueba);
                 System.out.println("Recibido todos los ACK, me desconecto");
-                //System.exit(0);
             }
 	}
     } 

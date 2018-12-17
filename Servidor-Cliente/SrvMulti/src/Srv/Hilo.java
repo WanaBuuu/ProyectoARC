@@ -8,12 +8,20 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @brief Clase principal
+ * @author G 1.1
+ */
 class Hilo implements Runnable{
     private final Socket socket;
     private ObjectOutputStream oos;
     private double ownTime;
     private Paquete p;
     
+    /**
+     * @brief Constructor de la clase
+     * @param socket Socket
+     */
     public Hilo(Socket socket) {
         this.socket = socket;
         
@@ -25,13 +33,26 @@ class Hilo implements Runnable{
         }
     }
     
+    /**
+     * @brief Metodo getter
+     * @return Paquete en cuestion
+     */
     public Paquete getPaquete() {
         return this.p;
     }
+    
+    /**
+     * @brief Metodo setter
+     * @param p Paquete en cuestion
+     */
     public void setPaquete(Paquete p) {
         this.p = p;
     }
     
+    /**
+     * @brief Metodo para enviar un paquete
+     * @param p Paquete
+     */
     public void envPaq(Paquete p){ //reenvia el paquete que recibe
        try {
             for(int j = 0; j < p.getnGrupos(); j++){
@@ -48,10 +69,13 @@ class Hilo implements Runnable{
            Thread.sleep(10000); // aqi deberia ponerse a dormir hasta que reciba la confirmacion de todos los clientes
         } catch (IOException | InterruptedException ex) {
            System.out.println("FALLA ENVIO PAQUETE");
-        // Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
     
+    /**
+     * @brief Metodo para enviar la confirmacion
+     * @param p Paquete
+     */
     public void envConfirmacion(Paquete p){
         try {
             for(int j = 0; j < p.getnGrupos(); j++){
@@ -67,11 +91,9 @@ class Hilo implements Runnable{
                     }
                 }
             }
-           
            Thread.sleep(10000); // aqi deberia ponerse a dormir hasta que reciba la confirmacion de todos los clientes
         } catch (IOException | InterruptedException ex) {
            System.out.println("FALLA ENVIO PAQUETE ACK");
-        // Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
        }
     }
     
@@ -91,17 +113,14 @@ class Hilo implements Runnable{
                 p = (Paquete)ois.readObject();
                 
                 ownTime = p.getTimestamp();
-                /*if(p != null)
-                    ownTime = p.getTimestamp();*/
                 
-                if (!p.isAck()){
+                if (!p.isAck()) {
                     System.out.println("SERVIDOR intercepta coordenadas "+ p.getCoordenadas() + " del CLIENTE " + p.getNumCliente() + " del grupo " + p.getNumGrupo());   
                     // Enviar el paquete al resto del grupo menos al que se lo ha enviado si no es 
                     this.envPaq(p);
                     System.out.println("Paquete normal");
                 }
-                else{
-                    /* Crea el paquete ack*/
+                else{ /* Crea el paquete ack*/
                     ack.setAck(true);
                     ack.setNumCliente(p.getNumCliente());
                     ack.setNumGrupo(p.getNumGrupo());
@@ -111,7 +130,6 @@ class Hilo implements Runnable{
                     this.envConfirmacion(ack);
                     System.out.println("paquete ack");
                 }
-                   
             } catch (ClassNotFoundException | IOException e) {
                 System.out.println("falla run hilo");
                 Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, e);

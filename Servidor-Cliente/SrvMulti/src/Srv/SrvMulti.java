@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Srv;
 
 import java.io.IOException;
@@ -11,70 +6,32 @@ import java.net.Socket;
 import java.util.Vector;
 import paquete.Paquete;
 
+/**
+ * @brief Clase principal
+ * @author G 1.1
+ */
 public class SrvMulti {
 
     private static final int numClientes = 10;
-      
+    /**
+     * @brief Metodo main del programa
+     * @param args Argumentos
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         
         PantallaServidor pantalla = new PantallaServidor();
-        pantalla.setVisible(true);
-        
-        /*Vector<Hilo> hilos = new Vector<>();
-        int port = 10000;
-        
-        
-	int numConexiones = 0;
-		
-        try {
-            ServerSocket ss = new ServerSocket(port, numClientes);
-            
-            while (numConexiones < numClientes){
-                try {
-                    Socket s = ss.accept(); // aceptas conexion
-                    System.out.println("Aceptada la conexión " + ss);
-                    numConexiones++;
-                    Hilo sh = new Hilo(s); // crea el hilo del servidor
-                    hilos.add(sh);
-                   // new Thread(sh).start(); // empieza el hilo
-		} catch (IOException e) {
-                    System.out.println("No se puede conectar con el puerto " + port +": " + e.getMessage());
-		}
-            }
-            
-            for(int i = 0; i< hilos.size(); i++){
-                new Thread(hilos.get(i)).start();
-            }
-        } catch (IOException ex) {
-            System.out.println("catch del server multi " + ex);
-            //Logger.getLogger(Jawa3.class.getName()).log(Level.SEVERE, null, ex);
-        }
-		
-        //añadido mipumu
-        System.out.println("*** Se han establecido todas las conexiones ***\n*** Empieza la simulación ***");
-
-        //Espera a que le lleguen los paquetes
-        while(hilos.get(0).getPaquete() == null) {
-            Thread.sleep(1000);
-        }
-        //Envia las coordenadas a cada vecino
-        for(int i = 0; i < hilos.size(); i++) {
-
-            Paquete paqDifundir = hilos.get(i).getPaquete();
-
-            for(int j = 0; j < hilos.size(); j++) {
-                if(paqDifundir.getNumCliente() != hilos.get(j).getPaquete().getNumCliente()) {
-                    hilos.get(j).envPaq(paqDifundir);
-                }
-            }
-        }*/	
+        pantalla.setVisible(true);	
     }
     
-    
+    /**
+     * @brief Lanza la aplicacion del servidor
+     * @param nConexiones Numero de conexiones
+     * @throws InterruptedException
+     */
     public void StartServidor(int nConexiones) throws InterruptedException{
         Vector<Hilo> hilos = new Vector<>();
         int port = 10000;
-        
 	int numConexiones = 0;
      
         try {
@@ -82,12 +39,11 @@ public class SrvMulti {
 
             while (true && numConexiones < numClientes){
                 try {
-                    Socket s = ss.accept(); // aceptas conexion
+                    Socket s = ss.accept(); // acepta conexion
                     System.out.println("Aceptada la conexión " + ss);
                     numConexiones++;
                     Hilo sh = new Hilo(s); // crea el hilo del servidor
                     hilos.add(sh);
-                   // new Thread(sh).start(); // empieza el hilo
                 } catch (IOException e) {
                     System.out.println("No se puede conectar con el puerto " + port +": " + e.getMessage());
                 }
@@ -98,17 +54,15 @@ public class SrvMulti {
             }
         } catch (IOException ex) {
             System.out.println("catch del server multi " + ex);
-            //Logger.getLogger(Jawa3.class.getName()).log(Level.SEVERE, null, ex);
         }	
-        
-		
-        //añadido mipumu
+
         System.out.println("*** Se han establecido todas las conexiones ***\n*** Empieza la simulación ***");
 
         //Espera a que le lleguen los paquetes
         while(hilos.get(0).getPaquete() == null) {
             Thread.sleep(100);
         }
+
         //Envia las coordenadas a cada vecino
         for(int i = 0; i < hilos.size(); i++) {
 
@@ -122,4 +76,3 @@ public class SrvMulti {
         }
     }
 }
-
