@@ -153,7 +153,7 @@ public class Cliente  implements Runnable { // extedns mihilo
             
             if (contadorACK < (this.nClientes)){ // (p.getnClientes() - 1)
                 //tiempo total que tarda el grupo en contestar al cliente -> suma de todos los d recibidos
-                System.out.println("Tiempo total del grupo: " + prueba);
+                System.out.println("Tiempo total del grupo: " + prueba + "\n");
                 System.out.println("Recibido todos los ACK, me desconecto");
             }
 	}
