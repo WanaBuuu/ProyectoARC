@@ -31,22 +31,25 @@ public class CltMulti {
         }*/
     }
     
-    public void StrartCliente(int nVecinos, int nClientesTotales, int ciclos, String ip, int port){
+    public void StartCliente(int nVecinos, int nClientesTotales, int ciclos, String ip, int port){
         int nClientes = (nVecinos + 1);
         int nGrupos = ((nVecinos +1) / nClientesTotales);
 	int pausa = 10000;
-	
-        int iteracion = 1;
+	int it = 0;
         String s;
      
-        for(int i = 0; i < nGrupos; i++){
-            ThreadGroup grupo = new ThreadGroup(String.valueOf(i));
-            for(int j = 0; j < nClientes; j++){
-                Cliente c = new Cliente(ip,port,pausa,i,j, nGrupos, nClientes);
+        do {
+            for(int i = 0; i < nGrupos; i++){
+                ThreadGroup grupo = new ThreadGroup(String.valueOf(i));
+                for(int j = 0; j < nClientes; j++){
+                    Cliente c = new Cliente(ip,port,pausa,i,j, nGrupos, nClientes);
 
-                new Thread(c).start(); // crea hilo que este dentro del grupo x con nombre j y lo empiezas
-                System.out.println("Grupo del hilo: " + grupo.getName() + " Numero del hilo: " + String.valueOf(j));
+                    new Thread(c).start(); // crea hilo que este dentro del grupo x con nombre j y lo empiezas
+                    System.out.println("Grupo del hilo: " + grupo.getName() + " Numero del hilo: " + String.valueOf(j));
+                }
             }
-        }
+            it++;
+        }while (it < ciclos);
+        
     }
 }

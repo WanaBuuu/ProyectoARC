@@ -183,7 +183,7 @@ public class PantallaCliente extends javax.swing.JFrame {
         clientesTotales = Integer.valueOf(nClientesTotales.getText());
         ip = ipServidor.getText();
         
-        clt.StrartCliente(vecinos, clientesTotales, ciclos, ip, npuerto);
+        clt.StartCliente(vecinos, clientesTotales, ciclos, ip, npuerto);
         
         this.setVisible(false);
     }//GEN-LAST:event_StarClienteActionPerformed
