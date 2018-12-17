@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,6 +59,8 @@ public class Cliente  implements Runnable { // extedns mihilo
      */
     public void envPaq(Paquete p){
 	try {
+            //Guarda la hora en que se envía el paquete
+            p.setTimestamp(System.currentTimeMillis());
 	    oos.writeObject(p);
             System.out.println("CLIENTE " + String.valueOf(id) + " del grupo " + String.valueOf(grupo) + " ha enviado coordenadas " + p.getCoordenadas() + " al SERVIDOR" );
 	    Thread.sleep(pausa); 
@@ -87,6 +90,8 @@ public class Cliente  implements Runnable { // extedns mihilo
         int x,y,z, contadorACK = 0;
         ObjectInputStream ois = null;
         boolean PInicion = false;
+        double d = 0, prueba = 0;
+        
 
         // Rellenamos el paquete que contendra las coordenadas
         // crea coordenas aleatorias
@@ -100,7 +105,7 @@ public class Cliente  implements Runnable { // extedns mihilo
         p.setNumGrupo(grupo);
         p.setnClientes(nClientes);
         p.setnGrupos(nGrupos);
-        p.setTimestamp(System.currentTimeMillis());
+        
         
         // Rellenamos el paquete para responder al servidor que nos ha llegado su reenvio
         ack.setNumCliente(id);
@@ -135,6 +140,8 @@ public class Cliente  implements Runnable { // extedns mihilo
                     this.envConfirmacion(ack);
                 }
                 else{   
+                    //ES UN PAQUETE ACK, GUARDAR EL TIEMPO Y HACER LA RESTA, ALMACENAR RESULTADO EN EL PROPIO PAQUETE?
+                    
                 }
             } catch (ClassNotFoundException | IOException e) {
                 System.out.println("falla run hilo");
@@ -142,11 +149,14 @@ public class Cliente  implements Runnable { // extedns mihilo
             }
            
             contadorACK ++;
-            double d = (p.getTimestamp() - t1)/2;
-            System.out.println("Tengo todos los ACK recibidos ");
-            System.out.println("Timestamp (d):\n");
+            d = (System.currentTimeMillis() - p.getTimestamp());
+            System.out.println("Tiempo por cliente (d): "+ d + "\n");
 
+            prueba += d;
+            
             if (contadorACK < (this.nClientes)){ // (p.getnClientes() - 1)
+                //tiempo total que tarda el grupo en contestar al cliente -> suma de todos los d recibidos
+                System.out.println("Tiempo total del grupo: " + prueba);
                 System.out.println("Recibido todos los ACK, me desconecto");
                 //System.exit(0);
             }
