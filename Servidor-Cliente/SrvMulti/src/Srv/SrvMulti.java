@@ -12,7 +12,7 @@ import paquete.Paquete;
  */
 public class SrvMulti {
 
-    private static final int numClientes = 10;
+    //private static final int numClientes = 10;
     /**
      * @brief Metodo main del programa
      * @param args Argumentos
@@ -35,9 +35,9 @@ public class SrvMulti {
 	int numConexiones = 0;
      
         try {
-            ServerSocket ss = new ServerSocket(port, numClientes);
+            ServerSocket ss = new ServerSocket(port, nConexiones);
 
-            while (true && numConexiones < numClientes){
+            while (true && numConexiones < nConexiones){
                 try {
                     Socket s = ss.accept(); // acepta conexion
                     System.out.println("Aceptada la conexión " + ss);
