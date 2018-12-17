@@ -129,8 +129,6 @@ public class Cliente  implements Runnable { // extedns mihilo
                 p = (Paquete)ois.readObject();
                 
                 if (!p.isAck()){
-                    t1 = p.getTimestamp() - System.currentTimeMillis();
-                    System.out.println("T1:" + t1);
                     System.out.println("CLIENTE intercepta coordenadas "+ p.getCoordenadas() + " del cliente " + p.getNumCliente() + " del grupo " + p.getNumGrupo() + " que le reenvia el servidor");
                     
                     // Eviar confirmacion de receptor del servidor
